@@ -76,16 +76,16 @@ class _PaymentState extends State<Payment> {
                 const SizedBox(
                   height: 30,
                 ),
-                PaymentFields(
+                const PaymentFields(
                   labelText: 'Card name',
                   hintText: 'Dulce Vetrovs',
                 ),
-                PaymentFields(
+                const PaymentFields(
                   labelText: 'Card number',
                   hintText: '2546 3645 2651 3651',
                 ),
                 Row(
-                  children: [
+                  children: const [
                     Expanded(
                       flex: 4,
                       child: PaymentFields(
@@ -94,7 +94,7 @@ class _PaymentState extends State<Payment> {
                         obSecure: true,
                       ),
                     ),
-                    const Spacer(
+                    Spacer(
                       flex: 2,
                     ),
                     Expanded(
@@ -128,8 +128,7 @@ class _PaymentState extends State<Payment> {
                       value: continuePaymentWithThisAccount!,
                       onToggle: (val) {
                         setState(() {
-                          continuePaymentWithThisAccount =
-                              !continuePaymentWithThisAccount!;
+                          continuePaymentWithThisAccount = !continuePaymentWithThisAccount!;
                         });
                       },
                     ),
@@ -244,27 +243,25 @@ class RecentCards extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class PaymentFields extends StatefulWidget {
-  // ignore: prefer_typing_uninitialized_variables
-  var labelText, hintText;
-  bool? obSecure, haveSuffixIcon;
-  TextEditingController? controller = TextEditingController();
+  final String labelText, hintText;
+  final bool? obSecure, haveSuffixIcon;
+  final TextEditingController? controller;
 
-  PaymentFields({
+  const PaymentFields({
     Key? key,
-    this.labelText,
-    this.hintText,
+    required this.labelText,
+    required this.hintText,
     this.controller,
     this.obSecure = false,
     this.haveSuffixIcon = false,
   }) : super(key: key);
 
   @override
-  _PaymentFieldsState createState() => _PaymentFieldsState();
+  PaymentFieldsState createState() => PaymentFieldsState();
 }
 
-class _PaymentFieldsState extends State<PaymentFields> {
+class PaymentFieldsState extends State<PaymentFields> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -275,7 +272,7 @@ class _PaymentFieldsState extends State<PaymentFields> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            '${widget.labelText}',
+            widget.labelText,
             style: const TextStyle(
               fontWeight: FontWeight.w500,
             ),
@@ -304,7 +301,7 @@ class _PaymentFieldsState extends State<PaymentFields> {
               obscureText: widget.obSecure!,
               obscuringCharacter: "*",
               decoration: InputDecoration(
-                hintText: '${widget.hintText}',
+                hintText: widget.hintText,
                 hintStyle: const TextStyle(
                   fontSize: 12,
                 ),

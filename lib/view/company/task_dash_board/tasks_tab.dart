@@ -1,20 +1,17 @@
 /*import 'package:copter/controller/company_controller/task_controller/task_controller.dart';
 import 'package:copter/controller/login_controller/login_controller.dart';*/
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Controllers/tasksController.dart';
-import 'package:copter/Controllers/userController.dart';
-import 'package:copter/Models/taskModel.dart';
+import 'package:copter/Controllers/tasks_controller.dart';
 import 'package:copter/view/constant/colors.dart';
-import 'package:copter/view/constant/images.dart';
 import 'package:copter/view/constant/other.dart';
 import 'package:copter/view/widget/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../Controllers/loginController.dart';
-
 class Tasks extends StatefulWidget {
-  Tasks({Key? key}) : super(key: key);
+  const Tasks({Key? key}) : super(key: key);
 
   @override
   State<Tasks> createState() => _TasksState();
@@ -55,9 +52,7 @@ class _TasksState extends State<Tasks> {
           ),
         ),
         StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .doc((taskController.selectedTask?.path).toString())
-                .snapshots(),
+            stream: FirebaseFirestore.instance.doc((taskController.selectedTask?.path).toString()).snapshots(),
             builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (!snapshot.hasData) {
                 return SliverPadding(
@@ -150,15 +145,15 @@ Widget tasksTiles(Map<String, dynamic> task, int index) {
               var tasks = data['tasks'];
 
               tasks[index]['isCompleted'] = value;
-              int total_completed = 0;
+              int totalCompleted = 0;
               for (Map<String, dynamic> value in tasks) {
                 if (value['isCompleted'] == true) {
-                  total_completed++;
+                  totalCompleted++;
                 }
               }
               String status = 'running';
 
-              double indicatorProgress = total_completed / tasks.length;
+              double indicatorProgress = totalCompleted / tasks.length;
 
               if (indicatorProgress == 1) {
                 status = 'completed';
@@ -166,11 +161,9 @@ Widget tasksTiles(Map<String, dynamic> task, int index) {
                 status = 'starting';
               }
 
-              await FirebaseFirestore.instance
-                  .doc(path)
-                  .update({'tasks': tasks.toList(), 'status': status});
-            } catch (e) {
-              print(e);
+              await FirebaseFirestore.instance.doc(path).update({'tasks': tasks.toList(), 'status': status});
+            } on FirebaseException catch (e) {
+              log(e.code);
             }
           },
           side: const BorderSide(

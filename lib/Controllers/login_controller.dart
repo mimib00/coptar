@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Controllers/userController.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/user/login.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -47,7 +47,7 @@ class LoginController extends GetxController {
 
       await updateDetailsInUserController();
 
-      Get.offAll(() => Root());
+      Get.offAll(() => const Root());
     } catch (e) {
       if (e.toString().split("]").length > 1) {
         Get.snackbar("Error", e.toString().split("]")[1]);
@@ -131,7 +131,7 @@ class LoginController extends GetxController {
 
       await updateSharedPref();
 
-      Get.offAll(() => Root());
+      Get.offAll(() => const Root());
     } catch (e) {
       if (e.toString().split("]").length > 1) {
         Get.snackbar("Error", e.toString().split("]")[1]);

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Controllers/userController.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/routes/routes.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/images.dart';

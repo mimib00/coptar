@@ -1,4 +1,4 @@
-import 'package:copter/Controllers/userController.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/view/constant/images.dart';
 import 'package:copter/view/constant/other.dart';
 import 'package:copter/view/widget/custom_app_bar.dart';
@@ -131,30 +131,25 @@ class _CProfileEditState extends State<CProfileEdit> {
                   );
 
                   if (nameController.text.isNotEmpty) {
-                await
-                userController.updateUserName(nameController.text);
+                    await userController.updateUserName(nameController.text);
                     nameController.clear();
                   }
                   if (taglineController.text.isNotEmpty) {
-                   await
-                   userController.updateUserTagline(taglineController.text);
+                    await userController.updateUserTagline(taglineController.text);
                     taglineController.clear();
                   }
                   if (emailController.text.isNotEmpty) {
                     if (_formKey.currentState!.validate()) {
-                    await
-                    userController.updateUserEmail(emailController.text);
+                      await userController.updateUserEmail(emailController.text);
                       emailController.clear();
                     }
                   }
                   if (phoneController.text.isNotEmpty) {
-                   await
-                   userController.updateUserPhone(phoneController.text);
+                    await userController.updateUserPhone(phoneController.text);
                     phoneController.clear();
                   }
                   if (passwordController.text.isNotEmpty) {
-                  await
-                  userController.updateUserPassword(passwordController.text);
+                    await userController.updateUserPassword(passwordController.text);
                     passwordController.clear();
                   }
 

@@ -1,5 +1,4 @@
-import 'package:copter/Controllers/loginController.dart';
-import 'package:copter/routes/routes.dart';
+import 'package:copter/Controllers/login_controller.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/widget/my_button.dart';
 import 'package:copter/view/widget/my_text.dart';
@@ -146,9 +145,7 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(
                 height: 15,
               ),
-              if (termsAccepted)
-                SignUpButton(
-                    formKey: _formKey, loginController: loginController),
+              if (termsAccepted) SignUpButton(formKey: _formKey, loginController: loginController),
               SizedBox(
                 height: 90,
                 child: Column(

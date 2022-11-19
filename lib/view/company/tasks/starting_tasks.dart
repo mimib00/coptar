@@ -8,7 +8,7 @@ import 'package:copter/view/widget/custom_app_bar.dart';
 import 'package:copter/view/widget/task_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../../Controllers/tasksController.dart';
+import '../../../Controllers/tasks_controller.dart';
 import 'package:get/get.dart';
 
 import '../../constant/colors.dart';
@@ -29,7 +29,7 @@ class StartingTasks extends StatelessWidget {
         body: GetX(
           init: Get.put<TaskController>(TaskController()),
           builder: (TaskController taskController) {
-            return (taskController.allTasks.value.isEmpty || taskController.allTasks.value == null)
+            return taskController.allTasks.value.isEmpty
                 ? Center(
                     child: MyText(
                       text: 'No task available',
@@ -39,16 +39,16 @@ class StartingTasks extends StatelessWidget {
                     ),
                   )
                 : ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: taskController.startingTasks.value.length,
                     itemBuilder: (context, int index) {
                       var task = taskController.startingTasks.value[index];
 
-                      int total_completed = 0;
+                      int totalCompleted = 0;
                       for (Map<String, dynamic> task in task.tasks) {
                         if (task['isCompleted']) {
-                          total_completed++;
+                          totalCompleted++;
                         }
                       }
                       return TasKWidget(
@@ -59,7 +59,7 @@ class StartingTasks extends StatelessWidget {
                         urgentProject: task.type == "starting",
                         personsWorking: 2,
                         timeLeft: task.end.toDate().difference(DateTime.now()).inDays.toString(),
-                        indicatorProgress: total_completed / task.tasks.length,
+                        indicatorProgress: totalCompleted / task.tasks.length,
                       );
                     });
           },

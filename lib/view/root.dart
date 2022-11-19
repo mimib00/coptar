@@ -1,4 +1,4 @@
-import 'package:copter/Controllers/userController.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/view/chat/chat_head.dart';
 import 'package:copter/view/company/c_home.dart';
 import 'package:copter/view/company/tasks/add_task.dart';
@@ -15,7 +15,7 @@ import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class Root extends StatefulWidget {
-  Root({Key? key}) : super(key: key);
+  const Root({Key? key}) : super(key: key);
 
   @override
   State<Root> createState() => _RootState();
@@ -29,12 +29,12 @@ class _RootState extends State<Root> {
     super.initState();
   }
 
-  final List<Widget> employeeScreens =  [
+  final List<Widget> employeeScreens = [
     EHome(),
-    ENotifications(),
+    const ENotifications(),
     // Tasks(),
-    ChatHead(),
-    EProfile(),
+    const ChatHead(),
+    const EProfile(),
   ];
   final List<Widget> companyScreen = const [
     CHome(),
@@ -46,7 +46,7 @@ class _RootState extends State<Root> {
 
   int currentIndex = 0;
 
-  void OnTap(int index) {
+  void onTap(int index) {
     setState(() {
       currentIndex = index;
     });
@@ -61,8 +61,8 @@ class _RootState extends State<Root> {
       floatingActionButton: InkWell(
         onTap: () {
           setState(() {
-            if (userController.userType == 'company') {
-              Get.to(() => AddTask());
+            if (userController.userType.value == 'company') {
+              Get.to(() => const AddTask());
             } else {
               Get.to(() => const Tasks());
             }
@@ -84,7 +84,7 @@ class _RootState extends State<Root> {
             ],
           ),
           child: Center(
-            child: userController.userType == 'company'
+            child: userController.userType.value == 'company'
                 ? const Icon(
                     Icons.add,
                     size: 30,
@@ -100,70 +100,12 @@ class _RootState extends State<Root> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: IndexedStack(
         index: currentIndex,
-        children: userController.userType == 'company'
-            ? companyScreen
-            : employeeScreens,
+        children: userController.userType.value == 'company' ? companyScreen : employeeScreens,
       ),
-      /* bottomNavigationBar: BottomAppBar(
-        elevation: 5.0,
-        clipBehavior: Clip.antiAlias,
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 8.0,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          height: 70,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              BottomNavBarItem(
-                icon: kHomeIcon,
-                label: 'Home',
-                isSelected: currentIndex == 0,
-                onTap: () {
-                  setState(() {
-                    currentIndex = 0;
-                  });
-                },
-              ),
-              BottomNavBarItem(
-                icon: kNotificationIcon,
-                label: 'Notification',
-                isSelected: currentIndex == 1,
-                onTap: () {
-                  setState(() {
-                    currentIndex = 1;
-                  });
-                },
-              ),
-              Container(),
-              BottomNavBarItem(
-                icon: kMessageIcon,
-                label: 'Message',
-                isSelected: currentIndex == 3,
-                onTap: () {
-                  setState(() {
-                    currentIndex = 3;
-                  });
-                },
-              ),
-              BottomNavBarItem(
-                icon: userController.userType == 'company' ? kTaskIcon : kProfileIcon,
-                label: userController.userType == 'company' ? 'Task' : 'Profile',
-                isSelected: currentIndex == 4,
-                onTap: () {
-                  setState(() {
-                    currentIndex = 4;
-                  });
-                },
-              ),
-            ],
-          ),
-        ),
-      ),*/
+
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        onTap: OnTap,
+        onTap: onTap,
         currentIndex: currentIndex,
         selectedItemColor: Colors.deepPurple,
         unselectedItemColor: Colors.grey,
@@ -171,16 +113,11 @@ class _RootState extends State<Root> {
         elevation: 0,
         items: [
           const BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-          const BottomNavigationBarItem(
-              label: 'Notification',
-              icon: Icon(Icons.notification_add_outlined)),
-          const BottomNavigationBarItem(
-              label: 'Message', icon: Icon(Icons.message_rounded)),
+          const BottomNavigationBarItem(label: 'Notification', icon: Icon(Icons.notification_add_outlined)),
+          const BottomNavigationBarItem(label: 'Message', icon: Icon(Icons.message_rounded)),
           BottomNavigationBarItem(
-              label: userController.userType == 'company' ? 'Task' : 'Profile',
-              icon: userController.userType == 'company'
-                  ? Icon(Icons.task)
-                  : Icon((Icons.person))),
+              label: userController.userType.value == 'company' ? 'Task' : 'Profile',
+              icon: userController.userType.value == 'company' ? const Icon(Icons.task) : const Icon((Icons.person))),
         ],
       ),
     );
@@ -212,12 +149,12 @@ class RootItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Image.asset(
-                '$icon',
+                icon,
                 height: 18,
                 color: isSelected ? kSecondaryColor : kDarkPurpleColor,
               ),
               MyText(
-                text: '$label',
+                text: label,
                 size: 10,
                 color: isSelected ? kSecondaryColor : kDarkPurpleColor,
               ),

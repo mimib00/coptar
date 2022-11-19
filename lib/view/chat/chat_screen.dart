@@ -1,12 +1,8 @@
-/*
-import 'package:copter/controller/chat_controller/chat_controller.dart';
-*/
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Models/userModel.dart';
+import 'package:copter/Models/user_model.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/images.dart';
 import 'package:copter/view/widget/my_text.dart';
@@ -15,17 +11,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../Controllers/chatController.dart';
-import '../../Controllers/userController.dart';
+import '../../Controllers/chat_controller.dart';
+import '../../Controllers/user_controller.dart';
 
-// ignore: must_be_immutable
 class ChatScreen extends StatefulWidget {
-  ChatScreen({
+  const ChatScreen({
     Key? key,
     this.employeModel,
   }) : super(key: key);
 
-  UserModel? employeModel;
+  final UserModel? employeModel;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -118,7 +113,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         itemCount: chatController.chatList.length,
                         itemBuilder: (context, index) {
                           /*var data = controller.getDummyMsg[index];*/
-                          var data = chatController.chatList.value[index];
+                          var data = chatController.chatList[index];
                           return ChatBubble(
                             index: index,
                             time: data.time,

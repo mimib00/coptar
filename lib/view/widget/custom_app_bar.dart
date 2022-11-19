@@ -1,7 +1,7 @@
 /*
 import 'package:copter/controller/login_controller/login_controller.dart';
 */
-import 'package:copter/Controllers/userController.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/routes/bindings.dart';
 import 'package:copter/routes/routes.dart';
 import 'package:copter/view/calendar/calendar.dart';
@@ -36,11 +36,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(60);
 }
 
-// ignore: must_be_immutable
 class CustomAppBarWithLogo extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBarWithLogo({
     Key? key,
@@ -53,7 +51,7 @@ class CustomAppBarWithLogo extends StatelessWidget implements PreferredSizeWidge
       leading: IconButton(
         onPressed: () {
           // Get.toNamed(AppLinks.eProfile);
-          Get.find<UserController>().userType == 'company'
+          Get.find<UserController>().userType.value == 'company'
               ? Get.toNamed(AppLinks.cProfile)
               : Get.toNamed(AppLinks.eProfile);
         },
@@ -98,6 +96,5 @@ class CustomAppBarWithLogo extends StatelessWidget implements PreferredSizeWidge
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(60);
 }

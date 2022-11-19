@@ -1,6 +1,6 @@
 /*import 'package:copter/controller/company_controller/task_controller/task_controller.dart';*/
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:copter/Models/userModel.dart';
+import 'package:copter/Models/user_model.dart';
 import 'package:copter/view/chat/add_chat.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/images.dart';
@@ -10,7 +10,7 @@ import 'package:copter/view/widget/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../Controllers/userController.dart';
+import '../../../Controllers/user_controller.dart';
 
 class InviteEmployee extends GetView<UserController> {
   const InviteEmployee({Key? key}) : super(key: key);

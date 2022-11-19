@@ -25,18 +25,16 @@ class MyButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _MyButtonState createState() => _MyButtonState();
+  MyButtonState createState() => MyButtonState();
 }
 
-class _MyButtonState extends State<MyButton> {
+class MyButtonState extends State<MyButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: widget.haveCustomElevation!
           ? BoxDecoration(
-              borderRadius: widget.haveRoundedEdges!
-                  ? BorderRadius.circular(50)
-                  : BorderRadius.circular(widget.radius),
+              borderRadius: widget.haveRoundedEdges! ? BorderRadius.circular(50) : BorderRadius.circular(widget.radius),
               boxShadow: [
                 BoxShadow(
                   color: widget.btnBgColor.withOpacity(0.3),

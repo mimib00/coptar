@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Models/taskModel.dart';
+import 'package:copter/Models/task_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 enum NotificationType {

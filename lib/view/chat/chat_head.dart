@@ -1,7 +1,5 @@
-/*import 'package:copter/controller/chat_controller/chat_head_controller.dart';*/
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Models/userModel.dart';
+import 'package:copter/Models/user_model.dart';
 import 'package:copter/view/chat/chat_screen.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/images.dart';
@@ -10,10 +8,9 @@ import 'package:copter/view/widget/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../Controllers/chatController.dart';
-import '../../Controllers/userController.dart';
+import '../../Controllers/chat_controller.dart';
+import '../../Controllers/user_controller.dart';
 import 'add_chat.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class ChatHead extends StatefulWidget {
   const ChatHead({Key? key}) : super(key: key);
@@ -80,7 +77,7 @@ class _ChatHeadState extends State<ChatHead> {
                                 ),
                               );
                             },
-                            childCount: chatController.inboxList.value.length,
+                            childCount: chatController.inboxList.length,
                           ),
                         ));
                   }),
@@ -96,11 +93,11 @@ class _ChatHeadState extends State<ChatHead> {
           right: 20,
           bottom: 80,
           child: FloatingActionButton(
-            child: Icon(Icons.chat),
             onPressed: () {
-              Get.to(AddChat());
+              Get.to(const AddChat());
             },
             backgroundColor: kPurpleColor,
+            child: const Icon(Icons.chat),
           ),
         )
       ],

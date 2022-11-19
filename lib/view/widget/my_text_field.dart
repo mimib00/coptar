@@ -24,10 +24,10 @@ class MyTextField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _MyTextFieldState createState() => _MyTextFieldState();
+  MyTextFieldState createState() => MyTextFieldState();
 }
 
-class _MyTextFieldState extends State<MyTextField> {
+class MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -81,10 +81,10 @@ class CustomTextField extends StatefulWidget {
 
   FormFieldValidator? validator;
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  CustomTextFieldState createState() => CustomTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -117,9 +117,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         });
                       },
                       child: Icon(
-                        widget.obSecure!
-                            ? Icons.visibility_off
-                            : Icons.visibility,
+                        widget.obSecure! ? Icons.visibility_off : Icons.visibility,
                         color: kPurpleColor,
                       ),
                     )

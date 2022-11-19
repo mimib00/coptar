@@ -7,7 +7,7 @@ import 'package:copter/view/widget/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../Controllers/userController.dart';
+import '../../Controllers/user_controller.dart';
 
 class EProfileEdit extends StatefulWidget {
   const EProfileEdit({Key? key}) : super(key: key);
@@ -72,23 +72,17 @@ class _EProfileEditState extends State<EProfileEdit> {
             CustomTextField(
               labelText: 'Your name',
               controller: nameController,
-              hintText: userController.name.value == null
-                  ? 'example : Gustavo Dias'
-                  : userController.name.value,
+              hintText: userController.name.value,
             ),
             CustomTextField(
               labelText: 'Your tagline',
               controller: taglineController,
-              hintText: userController.tagline.value == null
-                  ? 'example : UI UX Designer'
-                  : userController.tagline.value,
+              hintText: userController.tagline.value,
             ),
             CustomTextField(
               labelText: 'Your email address',
               controller: emailController,
-              hintText: userController.email.value == null
-                  ? 'email123@gmail.com'
-                  : userController.email.value,
+              hintText: userController.email.value,
             ),
             CustomTextField(
               labelText: 'Your password',
@@ -120,21 +114,18 @@ class _EProfileEditState extends State<EProfileEdit> {
                     nameController.clear();
                   }
                   if (taglineController.text.isNotEmpty) {
-                    await userController
-                        .updateEmaolyeTagline(taglineController.text);
+                    await userController.updateEmaolyeTagline(taglineController.text);
                     taglineController.clear();
                   }
                   if (emailController.text.isNotEmpty) {
                     if (_formKey.currentState!.validate()) {
-                      await userController
-                          .updateEmaolyeEmail(emailController.text);
+                      await userController.updateEmaolyeEmail(emailController.text);
                       emailController.clear();
                     }
                   }
 
                   if (passwordController.text.isNotEmpty) {
-                    await userController
-                        .updateUserPassword(passwordController.text);
+                    await userController.updateUserPassword(passwordController.text);
                     passwordController.clear();
                   }
 

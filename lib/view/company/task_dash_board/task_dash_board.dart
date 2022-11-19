@@ -6,8 +6,8 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Controllers/tasksController.dart';
-import 'package:copter/Models/userModel.dart';
+import 'package:copter/Controllers/tasks_controller.dart';
+import 'package:copter/Models/user_model.dart';
 import 'package:copter/view/company/task_dash_board/comments_tabs.dart';
 import 'package:copter/view/company/task_dash_board/file_tab.dart';
 import 'package:copter/view/company/task_dash_board/tasks_tab.dart';
@@ -159,7 +159,7 @@ class _TaskDashBoardState extends State<TaskDashBoard> with SingleTickerProvider
                                             Get.back();
 
                                             Get.to(
-                                              () => AddTask(isEdit: true),
+                                              () => const AddTask(isEdit: true),
                                             );
                                           },
                                           child: MyText(
@@ -314,7 +314,7 @@ class _TaskDashBoardState extends State<TaskDashBoard> with SingleTickerProvider
                         physics: const BouncingScrollPhysics(),
                         controller: _controller,
                         children: [
-                          Tasks(),
+                          const Tasks(),
                           File(data: data["files"]),
                           const Comments(),
                         ],
@@ -431,14 +431,14 @@ class _TaskDetailsState extends State<TaskDetails> {
             // print(data.data().toString());
             var task = data['tasks'].toList();
 
-            int total_completed = 0;
+            int totalCompleted = 0;
             for (Map<String, dynamic> value in task) {
               if (value['isCompleted'] == true) {
-                total_completed++;
+                totalCompleted++;
               }
             }
 
-            widget.indicatorProgress = total_completed / task.length;
+            widget.indicatorProgress = totalCompleted / task.length;
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

@@ -2,8 +2,8 @@
 import 'package:copter/controller/public_profile_controller/public_profile_controller.dart';
 */
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:copter/Controllers/userController.dart';
-import 'package:copter/Models/userModel.dart';
+import 'package:copter/Controllers/user_controller.dart';
+import 'package:copter/Models/user_model.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/other.dart';
 import 'package:copter/view/public_profile/public_profile_detail.dart';

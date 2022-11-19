@@ -1,15 +1,6 @@
-import 'package:copter/Controllers/loginController.dart';
+import 'package:copter/Controllers/login_controller.dart';
 import 'package:copter/Controllers/notification_controller.dart';
-import 'package:copter/Controllers/userController.dart';
-import 'package:copter/routes/routes.dart';
-import 'firebase_options.dart';
-import 'package:copter/view/constant/app_styling.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:copter/Controllers/loginController.dart';
-import 'package:copter/Controllers/notification_controller.dart';
-import 'package:copter/Controllers/userController.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/routes/routes.dart';
 import 'firebase_options.dart';
 import 'package:copter/view/constant/app_styling.dart';

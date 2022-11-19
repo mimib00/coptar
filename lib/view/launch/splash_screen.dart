@@ -1,7 +1,7 @@
 /*
 import 'package:copter/controller/splash_controller/splash_controller.dart';
 */
-import 'package:copter/Controllers/userController.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/routes/routes.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/images.dart';
@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     //set time to load the new page
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       loadData();
     });
     super.initState();
@@ -85,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       userController.startUserDataStream();
 
-      Get.off(() => Root());
+      Get.off(() => const Root());
     } else if (prefs.containsKey('isFirstTime')) {
       Get.offNamed(AppLinks.login);
     } else {

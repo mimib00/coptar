@@ -1,15 +1,10 @@
-/*
-import 'package:copter/controller/login_controller/login_controller.dart';
-*/
-import 'package:copter/Controllers/loginController.dart';
+import 'package:copter/Controllers/login_controller.dart';
 import 'package:copter/routes/routes.dart';
-import 'package:copter/view/root.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/images.dart';
 import 'package:copter/view/constant/other.dart';
 import 'package:copter/view/widget/my_button.dart';
 import 'package:copter/view/widget/my_text_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

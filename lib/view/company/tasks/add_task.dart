@@ -5,9 +5,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Controllers/tasksController.dart';
-import 'package:copter/Controllers/userController.dart';
-import 'package:copter/Models/userModel.dart';
+import 'package:copter/Controllers/tasks_controller.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/routes/bindings.dart';
 import 'package:copter/view/company/tasks/invite_employees.dart';
 import 'package:copter/view/constant/colors.dart';
@@ -19,7 +18,6 @@ import 'package:copter/view/widget/my_text.dart';
 import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -28,12 +26,12 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
-import '../../../Models/taskModel.dart';
+import '../../../Models/task_model.dart';
 
 class AddTask extends StatefulWidget {
-  late bool isEdit;
+  final bool isEdit;
 
-  AddTask({Key? key, this.isEdit = false}) : super(key: key);
+  const AddTask({Key? key, this.isEdit = false}) : super(key: key);
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -129,7 +127,6 @@ class _AddTaskState extends State<AddTask> {
                           setState(() {
                             tasksCollection.add(TextEditingController());
                           });
-                          print(tasksCollection);
                         },
                         child: MyText(
                           text: 'Add +',
@@ -151,7 +148,6 @@ class _AddTaskState extends State<AddTask> {
                         if (tasksCollection.length > 1)
                           GestureDetector(
                             onTap: () {
-                              print("delete pressed");
                               setState(() {
                                 tasksCollection.remove(e);
                               });
@@ -606,10 +602,10 @@ class AddTaskFiles extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AddTaskFilesState createState() => _AddTaskFilesState();
+  AddTaskFilesState createState() => AddTaskFilesState();
 }
 
-class _AddTaskFilesState extends State<AddTaskFiles> {
+class AddTaskFilesState extends State<AddTaskFiles> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -656,7 +652,7 @@ class _AddTaskFilesState extends State<AddTaskFiles> {
               ),
             ).then((value) {
               if (value == null) return;
-              print("value: $value");
+
               widget.controller!.text = value.toString().split(' ')[0];
               setState(() => widget.hintText = value.toString().split(' ')[0]);
             }),
@@ -718,15 +714,15 @@ class _AddTaskFilesState extends State<AddTaskFiles> {
 }
 
 class CalendarPopUp extends StatefulWidget {
-  DateTime? startDate;
+  final DateTime? startDate;
 
-  CalendarPopUp({this.startDate, Key? key}) : super(key: key);
+  const CalendarPopUp({this.startDate, Key? key}) : super(key: key);
 
   @override
-  _CalendarPopUpState createState() => _CalendarPopUpState();
+  CalendarPopUpState createState() => CalendarPopUpState();
 }
 
-class _CalendarPopUpState extends State<CalendarPopUp> {
+class CalendarPopUpState extends State<CalendarPopUp> {
   final DateTime _currentDate = DateTime.now();
   DateTime _currentDate2 = DateTime.now();
   String _currentMonth = DateFormat.yMMM().format(DateTime.now());
@@ -734,7 +730,7 @@ class _CalendarPopUpState extends State<CalendarPopUp> {
 
   @override
   Widget build(BuildContext context) {
-    final _calendarCarouselNoHeader = CalendarCarousel<Event>(
+    final calendarCarouselNoHeader = CalendarCarousel<Event>(
       todayBorderColor: kDarkPurpleColor,
       todayButtonColor: kLightPurpleColor,
       onDayPressed: (DateTime date, List<Event> events) {
@@ -897,7 +893,7 @@ class _CalendarPopUpState extends State<CalendarPopUp> {
         ),
         SizedBox(
           height: Get.height * 0.4,
-          child: _calendarCarouselNoHeader,
+          child: calendarCarouselNoHeader,
         ),
       ],
     );

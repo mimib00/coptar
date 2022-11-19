@@ -1,10 +1,9 @@
 //create user controller getx
 
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Models/userModel.dart';
+import 'package:copter/Models/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

@@ -2,13 +2,12 @@
 import 'package:copter/controller/notification_controller/notification_controller.dart';
 */
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Controllers/tasksController.dart';
+import 'package:copter/Controllers/tasks_controller.dart';
 import 'package:copter/Models/notification.dart';
 import 'package:copter/view/company/task_dash_board/task_dash_board.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/widget/custom_app_bar.dart';
 import 'package:copter/view/widget/my_text.dart';
-import 'package:copter/view/widget/notification_tiles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';

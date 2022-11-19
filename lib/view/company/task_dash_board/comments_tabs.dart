@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/view/company/task_dash_board/tasks_tab.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/other.dart';
 import 'package:copter/view/widget/my_text.dart';
@@ -7,7 +6,7 @@ import 'package:copter/view/widget/send_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../Controllers/tasksController.dart';
+import '../../../Controllers/tasks_controller.dart';
 import 'package:get/get.dart';
 
 class Comments extends StatefulWidget {
@@ -97,9 +96,7 @@ class _CommentsState extends State<Comments> {
                             comment: data.docs[index]["text"],
                             name: data.docs[index]["name"],
                             time: DateFormat(DateFormat.MONTH_WEEKDAY_DAY)
-                                .format(DateTime.parse(data.docs[index]["time"]
-                                    .toDate()
-                                    .toString())),
+                                .format(DateTime.parse(data.docs[index]["time"].toDate().toString())),
                           );
                         },
                         childCount: data.docs.length,

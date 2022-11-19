@@ -14,10 +14,10 @@ class CalendarWidget extends StatefulWidget {
   const CalendarWidget({Key? key}) : super(key: key);
 
   @override
-  _CalendarWidgetState createState() => _CalendarWidgetState();
+  CalendarWidgetState createState() => CalendarWidgetState();
 }
 
-class _CalendarWidgetState extends State<CalendarWidget> {
+class CalendarWidgetState extends State<CalendarWidget> {
   final DateTime _currentDate = DateTime.now();
   DateTime _currentDate2 = DateTime.now();
   String _currentMonth = DateFormat.yMMM().format(DateTime.now());

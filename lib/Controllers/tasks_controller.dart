@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Controllers/userController.dart';
-import 'package:flutter/material.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:get/get.dart';
 
-import '../Models/taskModel.dart';
+import '../Models/task_model.dart';
 
 //create get controller
 
@@ -28,8 +27,8 @@ class TaskController extends GetxController {
     super.onInit();
   }
 
- allTaskStream() {
-    try{
+  allTaskStream() {
+    try {
       return FirebaseFirestore.instance
           .collection(userController.companyType.value)
           .doc('tasks')
@@ -43,13 +42,10 @@ class TaskController extends GetxController {
         }
         return retVal;
       });
-    }catch(e){
+    } catch (e) {
       return null;
     }
-
   }
-
-  
 
   //
   // Stream<List<TaskModel>> urgentTaskStream() {
@@ -185,22 +181,13 @@ class TaskController extends GetxController {
 
   void buildLists() {
     allTasks.listen((event) {
-      urgentTasks.value =
-          event.where((element) => element.type == 'Urgent').toList();
-      ongoingTasks.value =
-          event.where((element) => element.type == 'Ongoing').toList();
-      startingTasks.value =
-          event.where((element) => element.status == 'starting').toList();
-      runningTasks.value =
-          event.where((element) => element.status == 'running').toList();
-      completedTasks.value =
-          event.where((element) => element.status == 'completed').toList();
+      urgentTasks.value = event.where((element) => element.type == 'Urgent').toList();
+      ongoingTasks.value = event.where((element) => element.type == 'Ongoing').toList();
+      startingTasks.value = event.where((element) => element.status == 'starting').toList();
+      runningTasks.value = event.where((element) => element.status == 'running').toList();
+      completedTasks.value = event.where((element) => element.status == 'completed').toList();
     });
   }
 
-  void editTask() {
-
-
-
-  }
+  void editTask() {}
 }

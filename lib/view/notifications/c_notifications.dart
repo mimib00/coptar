@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:copter/Controllers/notification_controller.dart';
 import 'package:copter/Models/notification.dart';
-import 'package:copter/Models/userModel.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/widget/custom_app_bar.dart';
 import 'package:copter/view/widget/my_text.dart';

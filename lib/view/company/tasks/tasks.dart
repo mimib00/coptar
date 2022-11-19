@@ -35,7 +35,6 @@ class _TasksState extends State<Tasks> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    // TODO: implement initState
     _controller = TabController(
       length: 3,
       vsync: this,
@@ -51,7 +50,6 @@ class _TasksState extends State<Tasks> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _controller!.dispose();
   }
@@ -59,7 +57,6 @@ class _TasksState extends State<Tasks> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /* resizeToAvoidBottomInset: true,*/
       appBar: AppBar(
         centerTitle: true,
         leading: Navigator.canPop(context) ? backButton() : null,
@@ -104,15 +101,11 @@ class _TasksState extends State<Tasks> with SingleTickerProviderStateMixin {
                       width: Get.width,
                       decoration: BoxDecoration(
                         borderRadius: RadiusHandler.radius10,
-                        color: currentIndex == index
-                            ? kSecondaryColor
-                            : kPrimaryColor,
+                        color: currentIndex == index ? kSecondaryColor : kPrimaryColor,
                       ),
                       child: Center(
                         child: MyText(
-                          color: currentIndex == index
-                              ? kPrimaryColor
-                              : kSecondaryColor,
+                          color: currentIndex == index ? kPrimaryColor : kSecondaryColor,
                           text: tabs![index],
                         ),
                       ),

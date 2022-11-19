@@ -49,9 +49,7 @@ class PaymentSuccessful extends StatelessWidget {
                 haveRoundedEdges: true,
                 haveCustomElevation: true,
                 onPressed: () => Get.offAll(
-                  () => Root(
-                   /* userType: LoginController.currentUser,*/
-                  ),
+                  () => const Root(),
                 ),
                 text: 'Back to home',
               ),

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Controllers/userController.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/other.dart';
 import 'package:copter/view/widget/back_button.dart';
@@ -62,9 +62,7 @@ class _GetEmployeeAccountState extends State<GetEmployeeAccount> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                _employessToCreate > 0
-                                    ? _employessToCreate--
-                                    : null;
+                                _employessToCreate > 0 ? _employessToCreate-- : null;
                               });
                             },
                             child: Image.asset(
@@ -107,18 +105,14 @@ class _GetEmployeeAccountState extends State<GetEmployeeAccount> {
                               barrierDismissible: false,
                             );
                             await Get.find<UserController>()
-                                .generateEmployeeAccounts(
-                                    numberOfEmployeesToGenerate:
-                                        _employessToCreate);
+                                .generateEmployeeAccounts(numberOfEmployeesToGenerate: _employessToCreate);
                             Get.back();
-                            Get.snackbar("Success",
-                                "$_employessToCreate Employee accounts generated");
+                            Get.snackbar("Success", "$_employessToCreate Employee accounts generated");
                             setState(() {
                               _employessToCreate = 0;
                             });
                           } else {
-                            Get.snackbar("Error",
-                                "The number of employees to create must be greater than 0");
+                            Get.snackbar("Error", "The number of employees to create must be greater than 0");
                           }
                         },
                         text: 'Generate employee',
@@ -152,8 +146,7 @@ class _GetEmployeeAccountState extends State<GetEmployeeAccount> {
         body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection("users")
-              .where("companyType",
-                  isEqualTo: Get.find<UserController>().companyType.value)
+              .where("companyType", isEqualTo: Get.find<UserController>().companyType.value)
               .where("type", isEqualTo: "employee")
               .snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -221,9 +214,7 @@ class PreviousEmployeesTiles extends StatelessWidget {
         ),
         trailing: GestureDetector(
           onTap: () async {
-            print("copy pressed");
-            await Clipboard.setData(
-                ClipboardData(text: "email : $email\npassword : $password"));
+            await Clipboard.setData(ClipboardData(text: "email : $email\npassword : $password"));
             Get.snackbar("Success", "Details copied to clipboard");
           },
           child: Container(

@@ -9,7 +9,7 @@ import 'package:copter/view/widget/task_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../Controllers/tasksController.dart';
+import '../../../Controllers/tasks_controller.dart';
 import '../../constant/colors.dart';
 import '../../widget/my_text.dart';
 
@@ -28,7 +28,7 @@ class CompletedTasks extends StatelessWidget {
       body: GetX(
         init: Get.put<TaskController>(TaskController()),
         builder: (TaskController taskController) {
-          return (taskController.allTasks.value.isEmpty || taskController.allTasks.value == null)
+          return taskController.allTasks.value.isEmpty
               ? Center(
                   child: MyText(
                     text: 'No task available',
@@ -38,16 +38,16 @@ class CompletedTasks extends StatelessWidget {
                   ),
                 )
               : ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: taskController.completedTasks.value.length,
                   itemBuilder: (context, int index) {
                     var task = taskController.completedTasks.value[index];
 
-                    int total_completed = 0;
+                    int totalCompleted = 0;
                     for (Map<String, dynamic> task in task.tasks) {
                       if (task['isCompleted']) {
-                        total_completed++;
+                        totalCompleted++;
                       }
                     }
                     return TasKWidget(
@@ -58,7 +58,7 @@ class CompletedTasks extends StatelessWidget {
                       urgentProject: task.type == "Urgent",
                       personsWorking: 2,
                       timeLeft: task.end.toDate().difference(DateTime.now()).inDays.toString(),
-                      indicatorProgress: total_completed / task.tasks.length,
+                      indicatorProgress: totalCompleted / task.tasks.length,
                     );
                   });
         },

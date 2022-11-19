@@ -8,7 +8,6 @@ import 'package:copter/view/constant/other.dart';
 import 'package:copter/view/widget/custom_app_bar.dart';
 import 'package:copter/view/widget/my_button.dart';
 import 'package:copter/view/widget/my_text.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';

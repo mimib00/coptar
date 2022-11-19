@@ -31,7 +31,7 @@ class ChatModel {
     };
   }
 
-  static List<ChatModel> JsonToListView(List<DocumentSnapshot> jsonList) {
+  static List<ChatModel> jsonToListView(List<DocumentSnapshot> jsonList) {
     return jsonList.map((e) => ChatModel.fromJson(e)).toList();
   }
 }

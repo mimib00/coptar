@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Controllers/tasksController.dart';
+import 'package:copter/Controllers/tasks_controller.dart';
 import 'package:copter/view/company/task_dash_board/task_dash_board.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/images.dart';

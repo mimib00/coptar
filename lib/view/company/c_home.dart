@@ -1,5 +1,5 @@
-import 'package:copter/Controllers/tasksController.dart';
-import 'package:copter/Controllers/userController.dart';
+import 'package:copter/Controllers/tasks_controller.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/view/company/tasks/completed_tasks.dart';
 import 'package:copter/view/company/tasks/running_tasks.dart';
 import 'package:copter/view/company/tasks/starting_tasks.dart';
@@ -93,7 +93,7 @@ class _CHomeState extends State<CHome> {
                 const SizedBox(
                   height: 30,
                 ),
-                (taskController.allTasks.value.isEmpty || taskController.allTasks.value == null)
+                taskController.allTasks.value.isEmpty
                     ? Center(
                         child: MyText(
                           text: 'No task available',

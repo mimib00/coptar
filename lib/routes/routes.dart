@@ -5,7 +5,6 @@ import 'package:copter/view/chat/chat_screen.dart';
 import 'package:copter/view/company/get_employee_account.dart';
 import 'package:copter/view/company/subscriptions/payment.dart';
 import 'package:copter/view/company/subscriptions/subscription.dart';
-import 'package:copter/view/company/task_dash_board/task_dash_board.dart';
 import 'package:copter/view/company/tasks/add_task.dart';
 import 'package:copter/view/company/tasks/cancel_tasks.dart';
 import 'package:copter/view/company/tasks/completed_tasks.dart';
@@ -56,7 +55,7 @@ class AppRoutes {
     ),
     GetPage(
       name: AppLinks.root,
-      page: () => Root(),
+      page: () => const Root(),
       binding: UserBindings(),
     ),
     GetPage(
@@ -65,7 +64,7 @@ class AppRoutes {
     ),
     GetPage(
       name: AppLinks.chatScreen,
-      page: () => ChatScreen(),
+      page: () => const ChatScreen(),
     ),
 
     //  Employee Screens
@@ -102,7 +101,7 @@ class AppRoutes {
     // ),
     GetPage(
       name: AppLinks.addTask,
-      page: () => AddTask(),
+      page: () => const AddTask(),
     ),
     GetPage(
       name: AppLinks.startingTasks,
@@ -129,7 +128,7 @@ class AppRoutes {
     ),
     GetPage(
       name: AppLinks.cProfile,
-      page: () => CProfile(),
+      page: () => const CProfile(),
     ),
     GetPage(
       name: AppLinks.cProfileEdit,

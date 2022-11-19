@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Models/userModel.dart';
+import 'package:copter/Models/user_model.dart';
 import 'package:get/get.dart';
 
-import '../Models/chatModel.dart';
+import '../Models/chat_model.dart';
 
 class ChatController extends GetxController {
   RxList<ChatModel> chatList = <ChatModel>[].obs;
@@ -20,7 +20,7 @@ class ChatController extends GetxController {
         .orderBy("time", descending: true)
         .snapshots()
         .listen((event) {
-      chatList.value = ChatModel.JsonToListView(event.docs);
+      chatList.value = ChatModel.jsonToListView(event.docs);
     });
   }
 
