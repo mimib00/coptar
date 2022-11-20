@@ -27,7 +27,7 @@ class NotificationModel {
   final String body;
   final Timestamp createdAt;
   final bool read;
-  final NotificationType? type;
+  final NotificationType type;
   final DocumentReference<Map<String, dynamic>>? id;
 
   NotificationModel(
@@ -52,7 +52,7 @@ class NotificationModel {
       data.data()!["created_at"],
       data.data()!["read"],
       ref,
-      data.data()!["type"] == null ? null : NotificationType.setType(data.data()!["type"]),
+      NotificationType.setType(data.data()!["type"]),
     );
   }
 
