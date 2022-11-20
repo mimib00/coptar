@@ -69,11 +69,11 @@ class NotificationController extends GetxController {
 
   @override
   void onInit() async {
-    flutterLocalNotificationsPlugin
+    await init();
+
+    await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()!
         .requestPermission();
-
-    await init();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
