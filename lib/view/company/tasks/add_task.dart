@@ -502,7 +502,7 @@ class _AddTaskState extends State<AddTask> {
                             "title": "Invited to a task",
                             "body": "${userController.name.value} has invited you to ${nameController.text}",
                             "type": "task",
-                            "task": "${userController.companyType.value}/tasks/tasks/$time",
+                            "id": "${userController.companyType.value}/tasks/tasks/$time",
                           },
                         );
                       } on DioError catch (e) {

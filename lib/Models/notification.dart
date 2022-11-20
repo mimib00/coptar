@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:copter/Models/task_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 enum NotificationType {
@@ -29,7 +28,7 @@ class NotificationModel {
   final Timestamp createdAt;
   final bool read;
   final NotificationType? type;
-  final DocumentReference<TaskModel>? task;
+  final DocumentReference<Map<String, dynamic>>? id;
 
   NotificationModel(
     this.uid,
@@ -37,16 +36,14 @@ class NotificationModel {
     this.body,
     this.createdAt,
     this.read,
-    this.task,
+    this.id,
     this.type,
   );
   factory NotificationModel.fromJson(DocumentSnapshot<Map<String, dynamic>> data) {
-    DocumentReference<TaskModel>? ref = data.data()!["task"].toString().isEmpty
+    DocumentReference<Map<String, dynamic>>? ref = data.data()!["id"] == null || data.data()!["id"].toString().isEmpty
         ? null
-        : FirebaseFirestore.instance.doc(data.data()!["task"].toString()).withConverter(
-              fromFirestore: (snapshot, options) => TaskModel.fromJson({...snapshot.data()!}),
-              toFirestore: (value, options) => {},
-            );
+        : FirebaseFirestore.instance.doc("${data.data()!["id"]}");
+    FirebaseFirestore.instance.collection("MP/tasks/tasks/");
 
     return NotificationModel(
       data.id,

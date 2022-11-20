@@ -1,9 +1,13 @@
 /*
 import 'package:copter/controller/notification_controller/notification_controller.dart';
 */
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:copter/Controllers/tasks_controller.dart';
 import 'package:copter/Models/notification.dart';
+import 'package:copter/Models/user_model.dart';
+import 'package:copter/view/chat/chat_screen.dart';
 import 'package:copter/view/company/task_dash_board/task_dash_board.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/widget/custom_app_bar.dart';
@@ -36,30 +40,49 @@ class ENotifications extends StatelessWidget {
         query: query,
         itemBuilder: (context, doc) {
           final notification = doc.data();
+
           return ListTile(
             onTap: () async {
-              if (notification.task == null) return;
-              final snap = await notification.task!.get();
+              if (notification.id == null) return;
+              final snap = await notification.id!.get();
               if (!snap.exists) return;
-              final task = snap.data()!;
+              switch (notification.type) {
+                case NotificationType.task:
+                  final task = snap.data()!;
 
-              Get.find<TaskController>().selectedTask = notification.task;
+                  Get.find<TaskController>().selectedTask = notification.id;
 
-              int totalCompleted = 0;
-              for (Map<String, dynamic> task in task.tasks) {
-                if (task['isCompleted']) {
-                  totalCompleted++;
-                }
+                  int totalCompleted = 0;
+                  for (Map<String, dynamic> task in task["tasks"]) {
+                    if (task['isCompleted']) {
+                      totalCompleted++;
+                    }
+                  }
+
+                  Get.to(
+                    () => TaskDashBoard(
+                      uid: snap.id,
+                      projectTitle: task["title"],
+                      urgentProject: task["type"] == "Urgent",
+                      indicatorProgress: totalCompleted / task["tasks"].length,
+                    ),
+                  );
+                  break;
+
+                case NotificationType.chat:
+                  final id = notification.id!.parent.parent!.id;
+                  final user = await FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(id)
+                      .withConverter(
+                        fromFirestore: (snapshot, options) => UserModel.fromJson(snapshot),
+                        toFirestore: (value, options) => {},
+                      )
+                      .get();
+
+                  Get.to(() => ChatScreen(employeModel: user.data()));
+                  break;
               }
-
-              Get.to(
-                () => TaskDashBoard(
-                  uid: snap.id,
-                  projectTitle: task.title,
-                  urgentProject: task.type == "Urgent",
-                  indicatorProgress: totalCompleted / task.tasks.length,
-                ),
-              );
             },
             isThreeLine: true,
             leading: const CircleAvatar(

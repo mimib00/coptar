@@ -189,7 +189,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     "title": widget.employeModel!.name,
                     "body": "message: $message",
                     "type": "chat",
-                    "task": "",
+                    "id":
+                        "${userController.companyType.value}/users/users/${widget.employeModel!.userId}/inbox/${userController.uid.value}/chat/$time",
                   },
                 );
               } on DioError catch (e) {

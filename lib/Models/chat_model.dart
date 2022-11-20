@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatModel {
-  String name, email, message;
-  Timestamp time;
-  bool isme;
+  final String name, email, message;
+  final Timestamp time;
+  final bool isme;
 
   ChatModel({
     required this.name,
