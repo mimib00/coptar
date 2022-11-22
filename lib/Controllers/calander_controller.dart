@@ -20,6 +20,7 @@ class CalanderController extends GetxController {
           .doc("tasks")
           .collection("tasks")
           .where("end", isGreaterThanOrEqualTo: Timestamp.fromDate(selectedDate.value))
+          .where("status", isEqualTo: "starting")
           .get();
 
       final List<TaskModel> tasks = [];

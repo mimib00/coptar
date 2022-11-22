@@ -1,8 +1,3 @@
-/*
-import 'package:copter/controller/notification_controller/notification_controller.dart';
-*/
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:copter/Controllers/tasks_controller.dart';
 import 'package:copter/Models/notification.dart';

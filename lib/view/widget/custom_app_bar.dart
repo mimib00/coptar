@@ -50,7 +50,6 @@ class CustomAppBarWithLogo extends StatelessWidget implements PreferredSizeWidge
       centerTitle: true,
       leading: IconButton(
         onPressed: () {
-          // Get.toNamed(AppLinks.eProfile);
           Get.find<UserController>().userType.value == 'company'
               ? Get.toNamed(AppLinks.cProfile)
               : Get.toNamed(AppLinks.eProfile);
