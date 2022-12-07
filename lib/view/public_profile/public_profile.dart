@@ -17,9 +17,6 @@ class PublicProfile extends GetView<UserController> {
 
   @override
   Widget build(BuildContext context) {
-    /* return GetBuilder<PublicProfileController>(
-      init: PublicProfileController(),
-      builder: (controller) {*/
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Profile',
@@ -36,6 +33,7 @@ class PublicProfile extends GetView<UserController> {
             itemBuilder: (context, index) {
               final user = users[index];
               return publicProfileTiles(
+                user.userId,
                 user.name,
                 user.status,
                 profileImage: user.employeImage,
@@ -44,25 +42,10 @@ class PublicProfile extends GetView<UserController> {
           );
         },
       ),
-      // body: ListView.builder(
-      //   shrinkWrap: true,
-      //   padding: EdgeInsets.zero,
-      //   itemCount: 5,
-      //   /*   itemCount: controller.getDummyProfiles.length,*/
-      //   physics: const BouncingScrollPhysics(),
-      //   itemBuilder: (context, index) {
-      //     // var data = controller.getDummyProfiles[index];
-      // return publicProfileTiles(
-      //   // "assets/images/dummy_public_accounts/d1.png",
-      //   "John Doe",
-      //   "Ui UX Designer",
-      // );
-      //   },
-      // ),
     );
   }
 
-  Widget publicProfileTiles(String name, String status, {String? profileImage}) {
+  Widget publicProfileTiles(String uid, String name, String status, {String? profileImage}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
       decoration: BoxDecoration(
@@ -79,6 +62,7 @@ class PublicProfile extends GetView<UserController> {
       child: ListTile(
         onTap: () => Get.to(
           () => PublicProfileDetail(
+            uid: uid,
             profileImage: profileImage,
             name: name,
             status: status,

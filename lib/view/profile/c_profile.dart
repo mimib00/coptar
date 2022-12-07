@@ -100,13 +100,6 @@ class _CProfileState extends State<CProfile> {
                   bgColor: kYellowColor,
                   onTap: () => Get.toNamed(AppLinks.subscription),
                 ),
-                // ProfileTiles(
-                //   icon: kLanguageIcon,
-                //   iconSize: 12,
-                //   title: 'Language',
-                //   bgColor: kSecondaryColor,
-                //   onTap: () {},
-                // ),
                 ProfileTiles(
                   icon: kPersonsGreen,
                   iconSize: 18,
@@ -121,14 +114,6 @@ class _CProfileState extends State<CProfile> {
                   bgColor: kSecondaryColor,
                   onTap: () => Get.toNamed(AppLinks.publicProfile),
                 ),
-                // ProfileTiles(
-                //   icon: kAlarmClock,
-                //   iconSize: 19,
-                //   haveNotificationButton: true,
-                //   title: 'Notification settings',
-                //   bgColor: kYellowColor,
-                //   onTap: () {},
-                // ),
                 ProfileTiles(
                   icon: kSupportIcon,
                   iconSize: 18,

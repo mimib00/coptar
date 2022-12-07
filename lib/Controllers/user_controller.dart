@@ -27,7 +27,7 @@ class UserController extends GetxController {
   RxList<UserModel> employeList = <UserModel>[].obs;
   RxList<UserModel> dummyEmploye = <UserModel>[].obs;
 
-  Future<double?> getTaskPerformance() async {
+  Future<double?> getTaskPerformance({String? id}) async {
     try {
       final docs =
           await FirebaseFirestore.instance.collection(companyType.value).doc("tasks").collection("tasks").get();
@@ -40,7 +40,7 @@ class UserController extends GetxController {
             .collection("tasks")
             .doc(doc.id)
             .collection("users")
-            .where("userId", isEqualTo: uid.value)
+            .where("userId", isEqualTo: id ?? uid.value)
             .get();
 
         if (snap.docs.isNotEmpty) {

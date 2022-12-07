@@ -1,21 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/view/constant/other.dart';
 import 'package:copter/view/widget/custom_app_bar.dart';
 import 'package:copter/view/widget/my_text.dart';
 import 'package:copter/view/widget/profile_resuable_widgets.dart';
 import 'package:copter/view/widget/review_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class PublicProfileDetail extends StatelessWidget {
+class PublicProfileDetail extends GetView<UserController> {
   const PublicProfileDetail({
     Key? key,
+    this.uid,
     this.profileImage,
     this.name,
     this.status,
   }) : super(key: key);
 
-  final String? profileImage, name, status;
+  final String? profileImage, name, status, uid;
 
   @override
   Widget build(BuildContext context) {
@@ -71,17 +74,14 @@ class PublicProfileDetail extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          ProgressBars(
-            title: 'Active',
-            indicatorProgress: 1.0,
-          ),
-          ProgressBars(
-            title: 'Task Performance',
-            indicatorProgress: 1.0,
-          ),
-          ProgressBars(
-            title: 'Quality',
-            indicatorProgress: 1.0,
+          FutureBuilder<double?>(
+            future: controller.getTaskPerformance(id: uid),
+            builder: (context, snapshot) {
+              return ProgressBars(
+                title: 'Task Performance',
+                indicatorProgress: snapshot.data ?? 0,
+              );
+            },
           ),
           const SizedBox(
             height: 15,

@@ -83,13 +83,14 @@ class _EProfileState extends State<EProfile> {
               height: 30,
             ),
             FutureBuilder<double?>(
-                future: userController.getTaskPerformance(),
-                builder: (context, snapshot) {
-                  return ProgressBars(
-                    title: 'Task Performance',
-                    indicatorProgress: snapshot.data ?? 0,
-                  );
-                }),
+              future: userController.getTaskPerformance(),
+              builder: (context, snapshot) {
+                return ProgressBars(
+                  title: 'Task Performance',
+                  indicatorProgress: snapshot.data ?? 0,
+                );
+              },
+            ),
             const SizedBox(
               height: 30,
             ),
