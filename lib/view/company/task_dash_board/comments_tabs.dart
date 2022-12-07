@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/other.dart';
 import 'package:copter/view/widget/my_text.dart';
@@ -19,6 +21,11 @@ class Comments extends StatefulWidget {
 class _CommentsState extends State<Comments> {
   TaskController taskController = Get.find();
   TextEditingController commentController = TextEditingController();
+
+  Future<String?> getPhoto(String uid) async {
+    final snap = await FirebaseFirestore.instance.collection("users").doc(uid).get();
+    return snap.data()?["photo"];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,19 +91,17 @@ class _CommentsState extends State<Comments> {
                     return SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
-                          // this.profileImage,
-                          // this.name,
-                          // this.status,
-                          // this.comment,
-                          // this.time,
-                          return CommentsCards(
-                            status: "hello",
-                            profileImage:
-                                "https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg",
-                            comment: data.docs[index]["text"],
-                            name: data.docs[index]["name"],
-                            time: DateFormat(DateFormat.MONTH_WEEKDAY_DAY)
-                                .format(DateTime.parse(data.docs[index]["time"].toDate().toString())),
+                          return FutureBuilder<String?>(
+                            future: getPhoto(data.docs[index]["owner"]),
+                            builder: (context, snapshot) {
+                              return CommentsCards(
+                                profileImage: snapshot.data,
+                                comment: data.docs[index]["text"],
+                                name: data.docs[index]["name"],
+                                time: DateFormat(DateFormat.MONTH_WEEKDAY_DAY)
+                                    .format(DateTime.parse(data.docs[index]["time"].toDate().toString())),
+                              );
+                            },
                           );
                         },
                         childCount: data.docs.length,
@@ -110,15 +115,16 @@ class _CommentsState extends State<Comments> {
           hintText: 'type here...',
           onTap: () {
             // print(commentController.value.text);
-
+            final UserController user = Get.find();
             if (commentController.value.text.isNotEmpty) {
               FirebaseFirestore.instance
                   .doc((taskController.selectedTask?.path).toString())
                   .collection("comments")
                   .add({
                 "text": commentController.value.text,
-                "time": DateTime.now(),
-                "name": "humza",
+                "time": FieldValue.serverTimestamp(),
+                "name": user.name.value,
+                "owner": user.uid.value
               });
               commentController.clear();
             }
@@ -136,22 +142,11 @@ class CommentsCards extends StatelessWidget {
     Key? key,
     this.profileImage,
     this.name,
-    this.status,
     this.comment,
     this.time,
-    // this.haveReplies = false,
-    // this.totalReplies,
-    // this.haveMedia = false,
-    // this.mediaImages,
-    // this.peopleWhoReply,
   }) : super(key: key);
 
-  String? profileImage, name, status, comment, time;
-
-  // bool? haveMedia, haveReplies;
-  // int? totalReplies;
-  // final List<String>? mediaImages;
-  // final List<String>? peopleWhoReply;
+  String? profileImage, name, comment, time;
 
   @override
   Widget build(BuildContext context) {
@@ -162,21 +157,19 @@ class CommentsCards extends StatelessWidget {
           ListTile(
             leading: ClipRRect(
               borderRadius: RadiusHandler.radius100,
-              child: Image.network(
-                '$profileImage',
+              child: CachedNetworkImage(
+                imageUrl: profileImage ?? "",
                 height: 40,
                 width: 40,
                 fit: BoxFit.cover,
+                errorWidget: (context, url, error) => const CircleAvatar(
+                  child: Icon(Icons.person_rounded),
+                ),
               ),
             ),
             title: MyText(
               text: '$name',
               weight: FontWeight.w500,
-            ),
-            subtitle: MyText(
-              text: '$status',
-              color: kDarkPurpleColor,
-              size: 10,
             ),
             trailing: MyText(
               text: '$time',
