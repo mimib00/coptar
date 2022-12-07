@@ -1,12 +1,20 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:copter/Controllers/user_controller.dart';
+import 'package:copter/view/constant/colors.dart';
 import 'package:copter/view/constant/images.dart';
 import 'package:copter/view/constant/other.dart';
 import 'package:copter/view/widget/custom_app_bar.dart';
 import 'package:copter/view/widget/my_button.dart';
 import 'package:copter/view/widget/my_text.dart';
 import 'package:copter/view/widget/my_text_field.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CProfileEdit extends StatefulWidget {
   const CProfileEdit({Key? key}) : super(key: key);
@@ -23,6 +31,8 @@ class _CProfileEditState extends State<CProfileEdit> {
   TextEditingController passwordController = TextEditingController();
 
   UserController userController = Get.put(UserController());
+
+  final picker = ImagePicker();
 
   //create global form key
   final _formKey = GlobalKey<FormState>();
@@ -48,27 +58,63 @@ class _CProfileEditState extends State<CProfileEdit> {
             const SizedBox(
               height: 20,
             ),
-            Center(
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: RadiusHandler.radius100,
-                    child: Image.asset(
-                      'assets/images/dummy_chat/user.png',
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.cover,
+            GestureDetector(
+              onTap: () async {
+                try {
+                  final image = await picker.pickImage(source: ImageSource.gallery);
+                  if (image == null) return;
+                  Get.defaultDialog(
+                    title: 'Please wait',
+                    content: const CircularProgressIndicator(color: kSecondaryColor),
+                    barrierDismissible: false,
+                  );
+                  final UserController user = Get.find();
+                  final storage = FirebaseStorage.instance.ref();
+                  final snap =
+                      await storage.child('profile/${user.uid}/${DateTime.now().microsecondsSinceEpoch}').putFile(
+                            File(image.path),
+                            SettableMetadata(
+                              contentType: "image/jpeg",
+                            ),
+                          );
+                  if (snap.state == TaskState.error || snap.state == TaskState.canceled) {
+                    throw "There was an error during upload";
+                  }
+                  final url = await snap.ref.getDownloadURL();
+
+                  await FirebaseFirestore.instance.collection("users").doc(user.uid.value).update({"photo": url});
+                  Get.back();
+                  Get.back();
+                } on FirebaseException catch (e) {
+                  Get.back();
+                  log(e.code);
+                }
+              },
+              child: Center(
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: RadiusHandler.radius100,
+                      child: CachedNetworkImage(
+                        imageUrl: userController.photo.value,
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => const CircleAvatar(
+                          child: Icon(Icons.person_rounded),
+                        ),
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 10,
-                    child: Image.asset(
-                      kAddButtonIcon,
-                      height: 18,
+                    Positioned(
+                      bottom: 0,
+                      left: Get.width * .09,
+                      child: Image.asset(
+                        kAddButtonIcon,
+                        height: 25,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             MyText(

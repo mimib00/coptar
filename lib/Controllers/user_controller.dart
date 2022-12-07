@@ -19,7 +19,7 @@ class UserController extends GetxController {
   Rx<String> email = ''.obs;
   Rx<String> name = ''.obs;
   Rx<String> phone = ''.obs;
-  late Rx<Image> profileImage;
+  Rx<String> photo = ''.obs;
   Rx<String> userType = ''.obs;
   Rx<String> companyType = ''.obs;
   Rx<String> tagline = ''.obs;
@@ -79,6 +79,7 @@ class UserController extends GetxController {
       userType.value = event.data()!['type'];
       companyType.value = event.data()!['companyType'];
       tagline.value = event.data()!['tagline'];
+      photo.value = event.data()!['photo'] ?? '';
 
       prefs.setString('email', email.value);
       prefs.setString('name', name.value);
@@ -86,6 +87,7 @@ class UserController extends GetxController {
       prefs.setString('userType', userType.value);
       prefs.setString('companyType', companyType.value);
       prefs.setString('tagline', tagline.value);
+      prefs.setString('photo', photo.value);
     });
   }
 

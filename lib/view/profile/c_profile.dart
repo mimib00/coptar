@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/routes/routes.dart';
@@ -44,26 +45,17 @@ class _CProfileState extends State<CProfile> {
                   height: 20,
                 ),
                 Center(
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: RadiusHandler.radius100,
-                        child: Image.asset(
-                          'assets/images/dummy_chat/user.png',
-                          height: 100,
-                          width: 100,
-                          fit: BoxFit.cover,
-                        ),
+                  child: ClipRRect(
+                    borderRadius: RadiusHandler.radius100,
+                    child: CachedNetworkImage(
+                      imageUrl: userController.photo.value,
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                      errorWidget: (context, url, error) => const CircleAvatar(
+                        child: Icon(Icons.person_rounded),
                       ),
-                      Positioned(
-                        bottom: 0,
-                        right: 10,
-                        child: Image.asset(
-                          kAddButtonIcon,
-                          height: 18,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
                 MyText(
