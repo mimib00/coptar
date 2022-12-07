@@ -35,127 +35,110 @@ class _EProfileState extends State<EProfile> {
           height: 40,
         ),
       ),
-      body: Obx(() => ListView(
-            padding: defaultPadding,
-            physics: const BouncingScrollPhysics(),
-            shrinkWrap: true,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: RadiusHandler.radius100,
-                      child: Image.asset(
-                        'assets/images/dummy_chat/tatiana.png',
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      ),
+      body: Obx(
+        () => ListView(
+          padding: defaultPadding,
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: RadiusHandler.radius100,
+                    child: Image.asset(
+                      'assets/images/dummy_chat/tatiana.png',
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
                     ),
-                    Positioned(
-                      bottom: 0,
-                      right: 10,
-                      child: Image.asset(
-                        kAddButtonIcon,
-                        height: 18,
-                      ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 10,
+                    child: Image.asset(
+                      kAddButtonIcon,
+                      height: 18,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              MyText(
-                paddingTop: 20,
-                align: TextAlign.center,
-                text: userController.name.value,
-                size: 16,
-                weight: FontWeight.w500,
-              ),
-              MyText(
-                align: TextAlign.center,
-                text: userController.companyType.value,
-                size: 12,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              ProgressBars(
-                title: 'Active',
-                indicatorProgress: 1.0,
-              ),
-              // ProgressBars(
-              //   title: 'Task Performance',
-              //   indicatorProgress: 1.0,
-              // ),
-              // ProgressBars(
-              //   title: 'Quality',
-              //   indicatorProgress: 1.0,
-              // ),
-              const SizedBox(
-                height: 30,
-              ),
-              ProfileTiles(
-                icon: kEditIcon,
-                iconSize: 17,
-                title: 'Edit profile',
-                bgColor: kSecondaryColor,
-                onTap: () => Get.toNamed(AppLinks.eProfileEdit),
-              ),
-              ProfileTiles(
-                icon: kReportIcon,
-                iconSize: 18,
-                title: 'Report',
-                bgColor: kGreenColor,
-                onTap: () => Get.toNamed(AppLinks.report),
-              ),
-              // ProfileTiles(
-              //   icon: kLanguageIcon,
-              //   iconSize: 12,
-              //   title: 'Language',
-              //   bgColor: kSecondaryColor,
-              //   onTap: () {},
-              // ),
-              // ProfileTiles(
-              //   icon: kAlarmClock,
-              //   iconSize: 19,
-              //   haveNotificationButton: true,
-              //   title: 'Notification settings',
-              //   bgColor: kYellowColor,
-              //   onTap: () {},
-              // ),
-              ProfileTiles(
-                icon: kSupportIcon,
-                iconSize: 18,
-                title: 'Support',
-                bgColor: kRedColor,
-                onTap: () {},
-              ),
-              ProfileTiles(
-                icon: kLogoutIcon,
-                iconSize: 18,
-                title: 'Log out',
-                bgColor: kSecondaryColor,
-                onTap: () async {
-                  final current = FirebaseAuth.instance.currentUser!;
-                  await FirebaseFirestore.instance
-                      .collection("users")
-                      .doc(current.uid)
-                      .update({"token": FieldValue.delete()});
-                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                  prefs.clear();
-                  prefs.setBool("isFirstTime", false);
+            ),
+            MyText(
+              paddingTop: 20,
+              align: TextAlign.center,
+              text: userController.name.value,
+              size: 16,
+              weight: FontWeight.w500,
+            ),
+            MyText(
+              align: TextAlign.center,
+              text: userController.companyType.value,
+              size: 12,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            FutureBuilder<double?>(
+                future: userController.getTaskPerformance(),
+                builder: (context, snapshot) {
+                  return ProgressBars(
+                    title: 'Task Performance',
+                    indicatorProgress: snapshot.data ?? 0,
+                  );
+                }),
+            const SizedBox(
+              height: 30,
+            ),
+            ProfileTiles(
+              icon: kEditIcon,
+              iconSize: 17,
+              title: 'Edit profile',
+              bgColor: kSecondaryColor,
+              onTap: () => Get.toNamed(AppLinks.eProfileEdit),
+            ),
+            ProfileTiles(
+              icon: kReportIcon,
+              iconSize: 18,
+              title: 'Report',
+              bgColor: kGreenColor,
+              onTap: () => Get.toNamed(AppLinks.report),
+            ),
+            ProfileTiles(
+              icon: kSupportIcon,
+              iconSize: 18,
+              title: 'Support',
+              bgColor: kRedColor,
+              onTap: () {},
+            ),
+            ProfileTiles(
+              icon: kLogoutIcon,
+              iconSize: 18,
+              title: 'Log out',
+              bgColor: kSecondaryColor,
+              onTap: () async {
+                final current = FirebaseAuth.instance.currentUser!;
+                await FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(current.uid)
+                    .update({"token": FieldValue.delete()});
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.clear();
+                prefs.setBool("isFirstTime", false);
 
-                  await FirebaseAuth.instance.signOut();
-                  Get.offAll(() => Login());
-                },
-              ),
-              const SizedBox(
-                height: 80,
-              ),
-            ],
-          )),
+                await FirebaseAuth.instance.signOut();
+                Get.offAll(() => Login());
+              },
+            ),
+            const SizedBox(
+              height: 80,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

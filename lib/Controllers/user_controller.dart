@@ -14,8 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 //create getx login controller
 class UserController extends GetxController {
   final dio = Dio();
-  //create firebase auth instance
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
+
   Rx<String> uid = ''.obs;
   Rx<String> email = ''.obs;
   Rx<String> name = ''.obs;
@@ -27,6 +26,37 @@ class UserController extends GetxController {
 
   RxList<UserModel> employeList = <UserModel>[].obs;
   RxList<UserModel> dummyEmploye = <UserModel>[].obs;
+
+  Future<double?> getTaskPerformance() async {
+    try {
+      final docs =
+          await FirebaseFirestore.instance.collection(companyType.value).doc("tasks").collection("tasks").get();
+      List myTasks = [];
+      int total = 0;
+      for (var doc in docs.docs) {
+        final snap = await FirebaseFirestore.instance
+            .collection(companyType.value)
+            .doc("tasks")
+            .collection("tasks")
+            .doc(doc.id)
+            .collection("users")
+            .where("userId", isEqualTo: uid.value)
+            .get();
+
+        if (snap.docs.isNotEmpty) {
+          total += 1;
+          myTasks.add(doc.data());
+        }
+      }
+
+      final unDone = myTasks.where((element) => element["status"] == "completed").length;
+      return unDone == 0 ? 0 : (total / unDone) / unDone;
+    } on FirebaseException catch (e) {
+      log(e.code);
+      log(e.message ?? "");
+      return null;
+    }
+  }
 
   Future<void> updateFCMToken() async {
     try {
