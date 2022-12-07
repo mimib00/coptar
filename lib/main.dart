@@ -14,7 +14,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await initBindings();
-
   runApp(const MyApp());
 }
 
@@ -23,17 +22,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UserController>(builder: (UserController userController) {
-      return GetMaterialApp(
-        debugShowMaterialGrid: false,
-        debugShowCheckedModeBanner: false,
-        title: 'Copter',
-        theme: AppStyling.styling,
-        initialRoute: AppLinks.splashScreen,
-        getPages: AppRoutes.pages,
-        themeMode: ThemeMode.light,
-      );
-    });
+    return GetBuilder<UserController>(
+      builder: (UserController userController) {
+        return GetMaterialApp(
+          debugShowMaterialGrid: false,
+          debugShowCheckedModeBanner: false,
+          title: 'Copter',
+          theme: AppStyling.styling,
+          initialRoute: AppLinks.splashScreen,
+          getPages: AppRoutes.pages,
+          themeMode: ThemeMode.light,
+        );
+      },
+    );
   }
 }
 
