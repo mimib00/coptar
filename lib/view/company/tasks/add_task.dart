@@ -17,12 +17,12 @@ import 'package:copter/view/widget/my_button.dart';
 import 'package:copter/view/widget/my_text.dart';
 import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
 import 'package:flutter_calendar_carousel/classes/event.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
@@ -54,6 +54,8 @@ class _AddTaskState extends State<AddTask> {
   UserController controller = Get.put(UserController());
   List<File> files = [];
   List<String> imageURL = [];
+
+  final picker = ImagePicker();
 
   @override
   void initState() {
@@ -220,10 +222,6 @@ class _AddTaskState extends State<AddTask> {
                         onTap: () {
                           Get.to(() => const InviteEmployee(), binding: UserBindings());
                         },
-
-                        // => Get.to(
-                        //   () => const InviteEmployee(),
-                        // ),
                         child: DottedBorder(
                           borderType: BorderType.RRect,
                           radius: const Radius.circular(100),
@@ -356,20 +354,12 @@ class _AddTaskState extends State<AddTask> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    FilePickerResult? result = await FilePicker.platform.pickFiles(
-                      allowMultiple: true,
-                      type: FileType.image,
-                      // allowedExtensions: ['jpg', 'pdf', 'doc'],
-                    );
+                    final images = await picker.pickMultiImage();
 
-                    if (result != null) {
-                      files = result.paths.map((path) => File(path!)).toList();
-                      setState(() {});
+                    if (images.isEmpty) return;
 
-                      // imageURL;
-
-                    } else {
-                      // User canceled the picker
+                    for (final image in images) {
+                      files.add(File(image.path));
                     }
                   },
                   child: DottedBorder(
@@ -433,21 +423,21 @@ class _AddTaskState extends State<AddTask> {
                 onPressed: () async {
                   int time = DateTime.now().microsecondsSinceEpoch;
 
-                  for (int i = 0; i < files.length; i++) {
-                    final firebaseStorage = FirebaseStorage.instance
-                        .ref()
-                        .child('tasks_$time')
-                        .child('${DateTime.now().millisecondsSinceEpoch}');
-                    UploadTask uploadTask = firebaseStorage.putFile(files[i]);
-                    TaskSnapshot taskSnapshot = await uploadTask;
-
-                    taskSnapshot.ref.getDownloadURL().then((value) {
-                      setState(() {
-                        imageURL.add(value);
-                      });
-                    });
+                  for (final file in files) {
+                    final storage = FirebaseStorage.instance.ref();
+                    final snap = await storage.child('tasks_$time/${DateTime.now().microsecondsSinceEpoch}').putFile(
+                          file,
+                          SettableMetadata(
+                            contentType: "image/jpeg",
+                          ),
+                        );
+                    if (snap.state == TaskState.error || snap.state == TaskState.canceled) {
+                      throw "There was an error during upload";
+                    }
+                    final url = await snap.ref.getDownloadURL();
+                    imageURL.add(url);
                   }
-                  // print("button pressed");
+
                   List<dynamic> newTasks = [];
                   for (var element in tasksCollection) {
                     newTasks.add({
@@ -491,6 +481,7 @@ class _AddTaskState extends State<AddTask> {
                           .collection("users")
                           .doc(employee.userId)
                           .set(employee.toJson());
+
                       final dio = Dio();
 
                       try {

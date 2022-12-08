@@ -2,6 +2,7 @@ import 'package:copter/Controllers/login_controller.dart';
 import 'package:copter/Controllers/notification_controller.dart';
 import 'package:copter/Controllers/user_controller.dart';
 import 'package:copter/routes/routes.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'firebase_options.dart';
 import 'package:copter/view/constant/app_styling.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
   await initBindings();
   runApp(const MyApp());
 }
