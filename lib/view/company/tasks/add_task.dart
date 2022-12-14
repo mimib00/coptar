@@ -25,6 +25,7 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../../Models/task_model.dart';
 
@@ -485,6 +486,14 @@ class _AddTaskState extends State<AddTask> {
                       final dio = Dio();
 
                       try {
+                        Get.dialog(
+                          const Center(
+                            child: CircularProgressIndicator(
+                              color: kPrimaryColor,
+                            ),
+                          ),
+                          barrierDismissible: false,
+                        );
                         const url = "https://us-central1-copter-439c8.cloudfunctions.net/sendNotification";
                         await dio.post(
                           url,
@@ -496,7 +505,9 @@ class _AddTaskState extends State<AddTask> {
                             "id": "${userController.companyType.value}/tasks/tasks/$time",
                           },
                         );
+                        Get.back();
                       } on DioError catch (e) {
+                        Get.back();
                         log(e.message);
                       }
                     }

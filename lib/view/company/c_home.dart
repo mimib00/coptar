@@ -1,5 +1,6 @@
 import 'package:copter/Controllers/tasks_controller.dart';
 import 'package:copter/Controllers/user_controller.dart';
+import 'package:copter/view/company/tasks/cancel_tasks.dart';
 import 'package:copter/view/company/tasks/completed_tasks.dart';
 import 'package:copter/view/company/tasks/running_tasks.dart';
 import 'package:copter/view/company/tasks/starting_tasks.dart';
@@ -80,6 +81,17 @@ class _CHomeState extends State<CHome> {
                         taskController.completedTasks.value.length.toString(),
                         kGreenColor,
                         () => Get.to(() => const CompletedTasks()),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                      child: dashBoardTiles(
+                        'Cancel',
+                        taskController.allTasks.value.where((element) => element.status == "cancel").length,
+                        kRedColor,
+                        () => Get.to(() => const CancelTasks()),
                       ),
                     ),
                   ],

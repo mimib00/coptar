@@ -171,9 +171,11 @@ class _TaskDashBoardState extends State<TaskDashBoard> with SingleTickerProvider
                                       PopupMenuItem(
                                         onTap: () async {
                                           Get.back();
-                                          await FirebaseFirestore.instance
-                                              .doc((taskController.selectedTask?.path).toString())
-                                              .delete();
+
+                                          if (taskController.selectedTask == null) return;
+                                          FirebaseFirestore.instance
+                                              .doc(taskController.selectedTask!.path)
+                                              .update({"status": "cancel"});
                                           taskController.selectedTask = null;
                                         },
                                         child: MyText(
@@ -181,20 +183,6 @@ class _TaskDashBoardState extends State<TaskDashBoard> with SingleTickerProvider
                                           size: 12,
                                         ),
                                       ),
-                                      // PopupMenuItem(
-                                      //   child: GestureDetector(
-                                      //     onTap: () {
-                                      //       Get.back();
-                                      //       Get.to(
-                                      //         () => const GiveRating(),
-                                      //       );
-                                      //     },
-                                      //     child: MyText(
-                                      //       text: 'Rated',
-                                      //       size: 12,
-                                      //     ),
-                                      //   ),
-                                      // ),
                                     ];
                                   },
                                   shape: RadiusHandler.roundedRadius10,
